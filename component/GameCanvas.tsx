@@ -57,13 +57,60 @@ export default function GameCanvas() {
         const width = this.cameras.main.width;
         const height = this.cameras.main.height;
 
+        this.cameras.main.setBackgroundColor("#6a0dad");
+
+        /* -------- BIG TITLE -------- */
+        const title = this.add
+          .text(width / 2, height / 2 - 140, "Welcome to degenVerse", {
+            fontFamily: "Comic Sans MS",
+            fontSize: "72px",
+            color: "#ffffff",
+            fontStyle: "bold",
+            stroke: "#ffffff",
+            strokeThickness: 3,
+          })
+          .setOrigin(0.5);
+
+        /* -------- FLOATING ANIMATION -------- */
+        this.tweens.add({
+          targets: title,
+          y: title.y - 25,
+          duration: 4000,
+          yoyo: true,
+          repeat: -1,
+          ease: "Sine.easeInOut",
+        });
+
+        /* -------- BREATHING SCALE ANIMATION -------- */
+        this.tweens.add({
+          targets: title,
+          scale: 1.05,
+          duration: 3000,
+          yoyo: true,
+          repeat: -1,
+          ease: "Sine.easeInOut",
+        });
+
+        /* -------- BOUNCING BALL -------- */
+        const ball = this.add.circle(width / 2, height / 2 + 60, 40, 0xffffff);
+
+        this.tweens.add({
+          targets: ball,
+          y: ball.y + 120,
+          duration: 1000,
+          ease: "Bounce.easeOut",
+          yoyo: true,
+          repeat: -1,
+        });
+
+        /* -------- LOADING BAR -------- */
         const progressBox = this.add.graphics();
         progressBox.fillStyle(0xffffff, 0.2);
         progressBox.fillRoundedRect(
           width / 2 - 200,
-          height / 2 - 30,
+          height / 2 + 140,
           400,
-          60,
+          50,
           20,
         );
 
@@ -71,12 +118,12 @@ export default function GameCanvas() {
 
         this.load.on("progress", (value: number) => {
           progressBar.clear();
-          progressBar.fillStyle(0x6a0dad, 1);
+          progressBar.fillStyle(0xffffff, 1);
           progressBar.fillRoundedRect(
             width / 2 - 190,
-            height / 2 - 20,
+            height / 2 + 150,
             380 * value,
-            40,
+            30,
             20,
           );
         });
@@ -91,13 +138,13 @@ export default function GameCanvas() {
           "https://labs.phaser.io/assets/sprites/platform.png",
         );
 
-        // Record preload start time
         this.loadStartTime = this.time.now;
       }
 
       create() {
         const elapsed = this.time.now - this.loadStartTime;
-        const minTime = 5000; // 5 seconds
+
+        const minTime = Phaser.Math.Between(10000, 15000); // 4–5 seconds
         const remaining = Math.max(minTime - elapsed, 0);
 
         this.time.delayedCall(remaining, () => {
@@ -142,7 +189,6 @@ export default function GameCanvas() {
         platforms.create(1800, 550, "ground");
         platforms.create(2300, 600, "ground");
 
-        /* -------- PLAYER -------- */
         this.player = this.physics.add.sprite(200, 400, "player");
         this.player.setDisplaySize(this.basePlayerWidth, this.basePlayerHeight);
         this.player.setBounce(0.1);
@@ -155,7 +201,6 @@ export default function GameCanvas() {
         this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
         this.cameras.main.setBounds(0, 0, 4000, 800);
 
-        /* -------- COINS -------- */
         this.coins = this.physics.add.group();
         for (let i = 0; i < 25; i++) {
           const coin = this.coins.create(
@@ -175,7 +220,6 @@ export default function GameCanvas() {
           this,
         );
 
-        /* -------- ENEMIES -------- */
         this.enemies = this.physics.add.group();
         for (let i = 0; i < 8; i++) {
           const enemy = this.enemies.create(600 + i * 400, 200, "enemy");
@@ -193,7 +237,6 @@ export default function GameCanvas() {
           this,
         );
 
-        /* -------- SCORE -------- */
         this.scoreText = this.add
           .text(20, 20, "Score: 0", {
             fontFamily: "Comic Sans MS",
@@ -202,7 +245,6 @@ export default function GameCanvas() {
           })
           .setScrollFactor(0);
 
-        /* -------- FLOATING TITLE -------- */
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
         const floatingText = this.add
@@ -277,10 +319,9 @@ export default function GameCanvas() {
         if (this.isGameOver) return;
 
         const speed = 260;
-        const tiltAmplitude = 0.15; // max tilt (~8.6°)
-        const tiltFrequency = 0.005; // sloth-like sway
+        const tiltAmplitude = 0.15;
+        const tiltFrequency = 0.005;
 
-        // Horizontal movement with sloth-like sway
         if (this.cursors.left.isDown) {
           this.player.setVelocityX(-speed);
           this.player.setFlipX(true);
@@ -300,12 +341,10 @@ export default function GameCanvas() {
           );
         }
 
-        // Jump
         if (this.cursors.up.isDown && this.player.body.touching.down) {
           this.player.setVelocityY(-520);
         }
 
-        // Texture change
         if (!this.player.body.touching.down) {
           this.player.setTexture("player_jump");
         } else {
