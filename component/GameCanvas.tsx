@@ -150,7 +150,7 @@ export default function GameCanvas() {
 
         this.physics.add.collider(this.player, platforms);
 
-        this.cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard!.createCursorKeys();
 
         this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
         this.cameras.main.setBounds(0, 0, 4000, 800);
