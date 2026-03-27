@@ -10,7 +10,7 @@ export default function GamePage() {
   return (
     <div
       style={{
-        background: "linear-gradient(180deg,#6a0dad,#ffffff)",
+        background: "linear-gradient(180deg,#9FBF6D,#ffffff)",
         width: "100vw",
         height: "100vh",
       }}

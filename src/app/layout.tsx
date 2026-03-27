@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "degenVerse",
+  title: "goblynz",
   description: "CREATED BY 0x_hon",
 };
 

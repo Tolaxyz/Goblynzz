@@ -17,7 +17,7 @@ export default function GameCanvas() {
     mobileOverlay.style.left = "0";
     mobileOverlay.style.width = "100%";
     mobileOverlay.style.height = "100%";
-    mobileOverlay.style.backgroundColor = "#6a0dad";
+    mobileOverlay.style.backgroundColor = "#9FBF6D";
     mobileOverlay.style.color = "#ffffff";
     mobileOverlay.style.fontFamily = "Comic Sans MS";
     mobileOverlay.style.fontWeight = "bold";
@@ -57,11 +57,11 @@ export default function GameCanvas() {
         const width = this.cameras.main.width;
         const height = this.cameras.main.height;
 
-        this.cameras.main.setBackgroundColor("#6a0dad");
+        this.cameras.main.setBackgroundColor("#9FBF6D");
 
         /* -------- BIG TITLE -------- */
         const title = this.add
-          .text(width / 2, height / 2 - 140, "Welcome to degenVerse", {
+          .text(width / 2, height / 2 - 140, "Welcome to Goblynz", {
             fontFamily: "Comic Sans MS",
             fontSize: "72px",
             color: "#ffffff",
@@ -248,7 +248,7 @@ export default function GameCanvas() {
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
         const floatingText = this.add
-          .text(centerX, centerY, "degenverse", {
+          .text(centerX, centerY, "GOBLYNZ", {
             fontFamily: "Comic Sans MS",
             fontSize: "64px",
             fontStyle: "bold",
@@ -294,7 +294,7 @@ export default function GameCanvas() {
           .setOrigin(0.5);
 
         const button = this.add
-          .rectangle(centerX, centerY + 20, 240, 80, 0x6a0dad, 1)
+          .rectangle(centerX, centerY + 20, 240, 80, 0x9fbf6d, 1)
           .setStrokeStyle(4, 0xffffff)
           .setOrigin(0.5)
           .setInteractive({ useHandCursor: true })
@@ -310,8 +310,8 @@ export default function GameCanvas() {
           .setOrigin(0.5)
           .setScrollFactor(0);
 
-        button.on("pointerover", () => button.setFillStyle(0x8c3cff));
-        button.on("pointerout", () => button.setFillStyle(0x6a0dad));
+        button.on("pointerover", () => button.setFillStyle(0xe6b3a));
+        button.on("pointerout", () => button.setFillStyle(0x9fbf6d));
         button.on("pointerdown", () => this.scene.restart());
       }
 
@@ -366,7 +366,7 @@ export default function GameCanvas() {
         },
       },
       scene: [LoadingScene, GameScene],
-      backgroundColor: "#6a0dad",
+      backgroundColor: "#9FBF6D",
       scale: { mode: Phaser.Scale.RESIZE },
     };
 
